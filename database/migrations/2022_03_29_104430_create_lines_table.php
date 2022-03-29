@@ -16,8 +16,8 @@ return new class () extends Migration {
             $table->id();
             $table->foreignId('account_id')->constrained()->cascadeOnDelete();
             $table->foreignId('transaction_id')->constrained()->cascadeOnDelete();
-            $table->unsignedInteger('debit');
-            $table->unsignedInteger('credit');
+            $table->unsignedInteger('debit')->nullable();
+            $table->unsignedInteger('credit')->nullable();
             $table->timestamps();
         });
     }
