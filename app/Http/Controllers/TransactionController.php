@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Rules\Balance;
 use App\Models\Account;
 use App\Models\Journal;
 use App\Models\Transaction;
@@ -44,6 +45,11 @@ class TransactionController extends Controller
             'name' => 'required|max:255',
             'journal_id' => 'required|exists:journals,id',
             'date' => 'required|date_format:d/m/Y|before_or_equal:' . date('Y-m-d'),
+            'lines' => ['required', 'array', 'min:2', new Balance()],
+            'lines.*' => ['array:account_id,debit,credit'],
+            'lines.*.account_id' => 'required|exists:accounts,id',
+            'lines.*.debit' => 'nullable|integer|gt:0',
+            'lines.*.credit' => 'nullable|integer|gt:0',
         ]);
 
         $transaction = Transaction::create([

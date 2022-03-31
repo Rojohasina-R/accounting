@@ -17,7 +17,7 @@
             date: $("input[name='date']").val(),
             lines: lines
         }
-
+        console.log('data: ', data)
         $.ajax({
             url: "{{route('transactions.store')}}",
             data: data,
@@ -27,7 +27,7 @@
                 console.log(response)
             },
             error: function(error){
-                console.log(error)
+                console.log(error.responseJSON.errors)
             }
         });
     }
