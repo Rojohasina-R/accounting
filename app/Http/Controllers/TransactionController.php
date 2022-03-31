@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Journal;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class TransactionController extends Controller
 {
@@ -24,7 +26,8 @@ class TransactionController extends Controller
      */
     public function create()
     {
-        return view('transactions.create');
+        $journals = Journal::all();
+        return view('transactions.create', compact('journals'));
     }
 
     /**
@@ -35,15 +38,21 @@ class TransactionController extends Controller
      */
     public function store(Request $request)
     {
+        $attributes = request()->validate([
+            'name' => 'required',
+            'journal_id' => 'required',
+            'date' => 'required|date_format:d/m/Y|before_or_equal:' . date('Y-m-d'),
+        ]);
+
         $transaction = Transaction::create([
             'name' => request('name'),
             'journal_id' => request('journal_id'),
-            'date' => request('date'),
+            'date' => Carbon::createFromFormat('d/m/Y', request('date'))->toDateString(),
         ]);
 
-        foreach (request('lines') as $line) {
+        /*foreach (request('lines') as $line) {
             $transaction->lines()->create($line);
-        }
+        }*/
     }
 
     /**
