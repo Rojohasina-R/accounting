@@ -39,8 +39,8 @@ class TransactionController extends Controller
     public function store(Request $request)
     {
         $attributes = request()->validate([
-            'name' => 'required',
-            'journal_id' => 'required',
+            'name' => 'required|max:255',
+            'journal_id' => 'required|exists:journals,id',
             'date' => 'required|date_format:d/m/Y|before_or_equal:' . date('Y-m-d'),
         ]);
 
