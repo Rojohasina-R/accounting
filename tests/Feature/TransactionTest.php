@@ -45,11 +45,13 @@ class TransactionTest extends TestCase
         ]);
 
         $this->assertDatabaseHas('lines', [
+            'transaction_id' => 1,
             'account_id' => $debited_account_id,
             'debit' => 40000,
         ]);
 
         $this->assertDatabaseHas('lines', [
+            'transaction_id' => 1,
             'account_id' => $credited_account_id,
             'credit' => 40000,
         ]);
