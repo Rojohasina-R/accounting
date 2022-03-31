@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use App\Models\Account;
 use App\Models\Journal;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
 
 class TransactionController extends Controller
 {
@@ -27,7 +28,8 @@ class TransactionController extends Controller
     public function create()
     {
         $journals = Journal::all();
-        return view('transactions.create', compact('journals'));
+        $accounts = Account::orderBy('code')->get();
+        return view('transactions.create', compact(['journals', 'accounts']));
     }
 
     /**
@@ -50,9 +52,11 @@ class TransactionController extends Controller
             'date' => Carbon::createFromFormat('d/m/Y', request('date'))->toDateString(),
         ]);
 
-        /*foreach (request('lines') as $line) {
+        foreach (request('lines') as $line) {
             $transaction->lines()->create($line);
-        }*/
+        }
+
+        return ['here'];
     }
 
     /**

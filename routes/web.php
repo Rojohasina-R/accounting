@@ -23,6 +23,6 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::get('/transactions/create', [TransactionController::class, 'create']);
-Route::post('/transactions', [TransactionController::class, 'store']);
+Route::post('/transactions', [TransactionController::class, 'store'])->name('transactions.store');
 
 require __DIR__.'/auth.php';

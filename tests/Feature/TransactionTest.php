@@ -26,9 +26,11 @@ class TransactionTest extends TestCase
                 [
                     'account_id' => $debited_account_id = Account::factory()->create()->id,
                     'debit' => 40000,
+                    'credit' => null,
                 ],
                 [
                     'account_id' => $credited_account_id = Account::factory()->create()->id,
+                    'debit' => null,
                     'credit' => 40000,
                 ],
             ]
@@ -42,7 +44,7 @@ class TransactionTest extends TestCase
             'date' => date('Y-m-d'),
         ]);
 
-        /*$this->assertDatabaseHas('lines', [
+        $this->assertDatabaseHas('lines', [
             'account_id' => $debited_account_id,
             'debit' => 40000,
         ]);
@@ -50,7 +52,7 @@ class TransactionTest extends TestCase
         $this->assertDatabaseHas('lines', [
             'account_id' => $credited_account_id,
             'credit' => 40000,
-        ]);*/
+        ]);
     }
 
     /** @test */
