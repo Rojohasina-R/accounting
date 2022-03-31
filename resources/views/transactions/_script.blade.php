@@ -1,3 +1,23 @@
+<script src="{{ asset('js/toastr.min.js') }}"></script>
+<script>
+    toastr.options = {
+      "closeButton": true,
+      "debug": false,
+      "newestOnTop": false,
+      "progressBar": false,
+      "positionClass": "toast-top-right",
+      "preventDuplicates": false,
+      "onclick": null,
+      "showDuration": "300",
+      "hideDuration": "1000",
+      "timeOut": "0",
+      "extendedTimeOut": "1000",
+      "showEasing": "swing",
+      "hideEasing": "linear",
+      "showMethod": "fadeIn",
+      "hideMethod": "fadeOut"
+    }
+</script>
 <script>
     customSubmit = () => {
         const lines = []
@@ -17,7 +37,6 @@
             date: $("input[name='date']").val(),
             lines: lines
         }
-        console.log('data: ', data)
         $.ajax({
             url: "{{route('transactions.store')}}",
             data: data,
@@ -27,7 +46,13 @@
                 console.log(response)
             },
             error: function(error){
-                console.log(error.responseJSON.errors)
+                const errors = error.responseJSON.errors
+                let errorMessage = '<ul>'
+                for (let error of Object.values(errors)) {
+                    errorMessage = `${errorMessage}<li>${error[0]}</li>`
+                }
+                errorMessage += '</ul>'
+                toastr.error(errorMessage)
             }
         });
     }
