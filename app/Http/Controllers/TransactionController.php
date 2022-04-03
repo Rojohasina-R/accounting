@@ -8,9 +8,18 @@ use App\Models\Account;
 use App\Models\Journal;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use App\Repositories\TransactionRepository;
 
 class TransactionController extends Controller
 {
+    private $transactionRepository;
+
+    public function __construct(TransactionRepository $transactionRepository)
+    {
+        $this->transactionRepository = $transactionRepository;
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -52,15 +61,7 @@ class TransactionController extends Controller
             'lines.*.credit' => 'nullable|integer|gt:0',
         ]);
 
-        $transaction = Transaction::create([
-            'name' => request('name'),
-            'journal_id' => request('journal_id'),
-            'date' => Carbon::createFromFormat('d/m/Y', request('date'))->toDateString(),
-        ]);
-
-        foreach (request('lines') as $line) {
-            $transaction->lines()->create($line);
-        }
+        $this->transactionRepository->create($attributes);
 
         return ['here'];
     }
