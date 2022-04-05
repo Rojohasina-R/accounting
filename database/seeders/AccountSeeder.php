@@ -38,11 +38,11 @@ class AccountSeeder extends Seeder
             'code' => '530',
             'type' => 'actif',
         ]);
-        Account::create([
+        /*Account::create([
             'name' => 'Achats',
             'code' => '601',
             'type' => 'charge',
-        ]);
+        ]);*/
         Account::create([
             'name' => 'Poussins',
             'code' => '6011',

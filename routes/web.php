@@ -27,5 +27,6 @@ Route::get('/transactions/create', [TransactionController::class, 'create']);
 Route::post('/transactions', [TransactionController::class, 'store'])->name('transactions.store');
 
 Route::get('/bilan', [ReportingController::class, 'showBilan']);
+Route::get('/resultat', [ReportingController::class, 'showResultat']);
 
 require __DIR__.'/auth.php';

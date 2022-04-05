@@ -42,4 +42,41 @@ class ReportingController extends Controller
 
         return view('reporting.bilan', compact(['actifs', 'passifs', 'totalActif', 'totalPassif']));
     }
+
+    public function showResultat()
+    {
+        $charges = [];
+        $chargeAccounts = Account::where('type', 'charge')
+            ->orderBy('code')
+            ->get();
+        foreach ($chargeAccounts as $charge) {
+            $total = $charge->lines->sum(function ($line) {
+                return $line->debit - $line->credit;
+            });
+            $charges[] = [
+                'name' => $charge->name,
+                'total' => $total
+            ];
+        }
+
+        $produits = [];
+        $produitAccounts = Account::where('type', 'produit')
+            ->orderBy('code')
+            ->get();
+        foreach ($produitAccounts as $produit) {
+            $total = $produit->lines->sum(function ($line) {
+                return $line->credit - $line->debit;
+            });
+            $produits[] = [
+                'name' => $produit->name,
+                'total' => $total
+            ];
+        }
+
+        $totalCharges = collect($charges)->sum('total');
+        $totalProduits = collect($produits)->sum('total');
+        $resultat = $totalProduits - $totalCharges;
+
+        return view('reporting.resultat', compact(['charges', 'produits', 'totalCharges', 'totalProduits', 'resultat']));
+    }
 }
