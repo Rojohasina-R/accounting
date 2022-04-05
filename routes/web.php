@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ReportingController;
 use App\Http\Controllers\TransactionController;
 
 /*
@@ -24,5 +25,7 @@ Route::get('/dashboard', function () {
 
 Route::get('/transactions/create', [TransactionController::class, 'create']);
 Route::post('/transactions', [TransactionController::class, 'store'])->name('transactions.store');
+
+Route::get('/bilan', [ReportingController::class, 'showBilan']);
 
 require __DIR__.'/auth.php';

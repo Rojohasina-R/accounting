@@ -247,6 +247,11 @@ return [
             //'can'  => 'manage-blog',
         ],
         [
+            'text' => 'Bilan',
+            'url'  => 'bilan',
+            //'can'  => 'manage-blog',
+        ],
+        [
             'text' => 'blog',
             'url'  => 'admin/blog',
             'can'  => 'manage-blog',
