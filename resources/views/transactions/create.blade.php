@@ -11,7 +11,7 @@
         <h1 class="mb-3">Enregistrer une opération</h1>
         <form method="POST" action="/transactions">
             @csrf
-            <x-adminlte-select name="journal_id" label="Journal">
+            <x-adminlte-select name="journal_id" class="custom-select" label="Journal">
                 <option value="">Sélectionner un journal</option>
                 @foreach ($journals as $journal)
                     <option value="{{ $journal->id }}">{{ $journal->name }}</option>
