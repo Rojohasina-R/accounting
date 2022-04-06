@@ -29,5 +29,6 @@ Route::post('/transactions', [TransactionController::class, 'store'])->name('tra
 Route::get('/bilan', [ReportingController::class, 'showBilan']);
 Route::get('/resultat', [ReportingController::class, 'showResultat']);
 Route::get('/grand-livre', [ReportingController::class, 'showGrandLivre']);
+Route::get('/partials/grand-livre/{account}', [ReportingController::class, 'showGrandLivreData']);
 
 require __DIR__.'/auth.php';

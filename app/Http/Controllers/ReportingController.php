@@ -93,6 +93,20 @@ class ReportingController extends Controller
 
     public function showGrandLivre()
     {
-        return view('reporting.grand-livre');
+        $accounts = Account::whereIn('type', ['charge', 'produit'])
+            ->orWhereIn('name', ['Banque', 'Caisse'])
+            ->orderBy('code')
+            ->get();
+        return view('reporting.grand-livre', compact(['accounts']));
+    }
+
+    public function showGrandLivreData(Account $account)
+    {
+        $lines = $account->lines()
+            ->with('transaction')
+            /*->join('transactions', 'transactions.id', '=', 'lines.transaction_id')
+            ->orderBy('transactions.date', 'desc')*/
+            ->get();
+        return view('reporting._grand-livre', compact(['lines']));
     }
 }
