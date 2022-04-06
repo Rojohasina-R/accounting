@@ -3,10 +3,6 @@ Générer:
     - le compte de résultat entre une plage de dates
     - le grand livre de chaque compte entre une plage de dates
 
-Authentification
-CRUD comptes
-CRUD journaux
-
 Gestion clients
 Gestion fournisseurs
 
@@ -15,3 +11,11 @@ Gestion des échéances
 Ouverture/Clôture d'exercice
 
 Saisie partage dividendes
+
+Restes à faire:
+    - Grand livre:
+        * format date
+        * tri par date
+    - CRUD transactions
+    - CRUD comptes
+    - CRUD journaux

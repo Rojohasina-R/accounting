@@ -3,12 +3,11 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Header text</h1>
+    <h1>Enregistrer une opération</h1>
 @stop
 
 @section('content')
     <div class="col-12 col-md-6 mx-auto">
-        <h1 class="mb-3">Enregistrer une opération</h1>
         <form method="POST" action="/transactions">
             @csrf
             <x-adminlte-select name="journal_id" class="custom-select" label="Journal">
