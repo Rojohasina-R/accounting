@@ -15,20 +15,16 @@ use App\Http\Controllers\TransactionController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::middleware('auth')->group(function () {
+    Route::get('/bilan', [ReportingController::class, 'showBilan']);
+    Route::get('/resultat', [ReportingController::class, 'showResultat']);
+    Route::get('/grand-livre', [ReportingController::class, 'showGrandLivre']);
+    Route::get('/partials/grand-livre/{account}', [ReportingController::class, 'showGrandLivreData']);
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
-
-Route::get('/transactions/create', [TransactionController::class, 'create']);
-Route::post('/transactions', [TransactionController::class, 'store'])->name('transactions.store');
-
-Route::get('/bilan', [ReportingController::class, 'showBilan']);
-Route::get('/resultat', [ReportingController::class, 'showResultat']);
-Route::get('/grand-livre', [ReportingController::class, 'showGrandLivre']);
-Route::get('/partials/grand-livre/{account}', [ReportingController::class, 'showGrandLivreData']);
+Route::middleware('can:admin')->group(function () {
+    Route::get('/transactions/create', [TransactionController::class, 'create']);
+    Route::post('/transactions', [TransactionController::class, 'store'])->name('transactions.store');
+});
 
 require __DIR__.'/auth.php';

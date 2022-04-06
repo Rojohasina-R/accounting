@@ -14,9 +14,9 @@ class TransactionTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function a_user_can_create_a_transaction()
+    public function an_admin_can_create_a_transaction()
     {
-        $this->withoutExceptionHandling();
+        $this->signInAsAnAdmin();
 
         $data = [
             'name' => "Libellé de l'écriture",
@@ -35,6 +35,8 @@ class TransactionTest extends TestCase
                 ],
             ]
         ];
+
+        $this->get('/transactions/create')->assertOk();
 
         $this->post('/transactions', $data);
 
@@ -58,8 +60,20 @@ class TransactionTest extends TestCase
     }
 
     /** @test */
+    public function an_unauthenticated_user_and_a_simple_user_cannot_create_a_transaction()
+    {
+        $this->get('/transactions/create')->assertStatus(403);
+        $this->post('/transactions')->assertStatus(403);
+
+        $this->signInAsASimpleUser();
+        $this->get('/transactions/create')->assertStatus(403);
+        $this->post('/transactions')->assertStatus(403);
+    }
+
+    /** @test */
     public function a_transaction_requires_a_name()
     {
+        $this->signInAsAnAdmin();
         $attributes = Transaction::factory()->raw(['name' => '']);
         $this->post('/transactions', $attributes)->assertSessionHasErrors('name');
     }
@@ -67,13 +81,15 @@ class TransactionTest extends TestCase
     /** @test */
     public function a_transaction_requires_a_date()
     {
+        $this->signInAsAnAdmin();
         $attributes = Transaction::factory()->raw(['date' => '']);
         $this->post('/transactions', $attributes)->assertSessionHasErrors('date');
     }
 
     /** @test */
-    public function a_transaction_requires_a_past_date()
+    public function the_date_of_a_transaction_should_be_in_the_past()
     {
+        $this->signInAsAnAdmin();
         $attributes = Transaction::factory()->raw(['date' => date('d/m/Y', strtotime('+1 days'))]);
         $this->post('/transactions', $attributes)->assertSessionHasErrors('date');
     }
@@ -81,13 +97,15 @@ class TransactionTest extends TestCase
     /** @test */
     public function a_transaction_requires_a_journal_id()
     {
+        $this->signInAsAnAdmin();
         $attributes = Transaction::factory()->raw(['journal_id' => '']);
         $this->post('/transactions', $attributes)->assertSessionHasErrors('journal_id');
     }
 
     /** @test */
-    public function a_transaction_requires_a_journal_which_already_exists_in_the_database()
+    public function a_transaction_should_belong_to_a_journal_which_already_exists_in_the_database()
     {
+        $this->signInAsAnAdmin();
         $attributes = Transaction::factory()->raw(['journal_id' => 1]);
         $this->post('/transactions', $attributes)->assertSessionHasErrors('journal_id');
     }
@@ -95,6 +113,8 @@ class TransactionTest extends TestCase
     /** @test */
     public function a_transaction_requires_at_least_two_lines()
     {
+        $this->signInAsAnAdmin();
+
         $data = [
             'name' => "Libellé de l'écriture",
             'journal_id' => Journal::factory()->create()->id,
@@ -126,6 +146,8 @@ class TransactionTest extends TestCase
     /** @test */
     public function the_lines_of_a_transaction_should_be_balanced()
     {
+        $this->signInAsAnAdmin();
+
         $data = [
             'name' => "Libellé de l'écriture",
             'journal_id' => Journal::factory()->create()->id,
@@ -151,6 +173,8 @@ class TransactionTest extends TestCase
     /** @test */
     public function a_line_should_be_related_to_an_existing_account()
     {
+        $this->signInAsAnAdmin();
+
         $data = [
             'name' => "Libellé de l'écriture",
             'journal_id' => Journal::factory()->create()->id,
