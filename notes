@@ -19,3 +19,4 @@ Restes à faire:
     - CRUD transactions
     - CRUD comptes
     - CRUD journaux
+    - Refactor ReportingController

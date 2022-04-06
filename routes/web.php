@@ -15,6 +15,8 @@ use App\Http\Controllers\TransactionController;
 |
 */
 
+Route::redirect('/', '/login');
+
 Route::middleware('auth')->group(function () {
     Route::get('/bilan', [ReportingController::class, 'showBilan']);
     Route::get('/resultat', [ReportingController::class, 'showResultat']);
