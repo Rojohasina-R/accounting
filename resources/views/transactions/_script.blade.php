@@ -43,7 +43,7 @@
             method: 'post',
             dataType: 'json',
             success: function(response){
-                console.log(response)
+                toastr.success('ajouté avec succès')
             },
             error: function(error){
                 const errors = error.responseJSON.errors

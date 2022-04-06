@@ -24,6 +24,11 @@ class AccountSeeder extends Seeder
             'type' => 'actif',
         ]);
         Account::create([
+            'name' => 'Capital',
+            'code' => '101',
+            'type' => 'passif',
+        ]);
+        Account::create([
             'name' => 'Fournisseurs',
             'code' => '401',
             'type' => 'passif',

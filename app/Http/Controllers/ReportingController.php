@@ -31,6 +31,17 @@ class ReportingController extends Controller
             $total = $passif->lines->sum(function ($line) {
                 return $line->credit - $line->debit;
             });
+
+            if ($passif->name === 'Résultat') {
+                $gestionAccounts = Account::whereIn('type', ['charge', 'produit'])
+                    ->get();
+                foreach ($gestionAccounts as $gestion) {
+                    $total = $total + $gestion->lines->sum(function ($line) {
+                        return $line->credit - $line->debit;
+                    });
+                }
+            }
+
             $passifs[] = [
                 'name' => $passif->name,
                 'total' => $total
@@ -78,5 +89,10 @@ class ReportingController extends Controller
         $resultat = $totalProduits - $totalCharges;
 
         return view('reporting.resultat', compact(['charges', 'produits', 'totalCharges', 'totalProduits', 'resultat']));
+    }
+
+    public function showGrandLivre()
+    {
+        return view('reporting.grand-livre');
     }
 }

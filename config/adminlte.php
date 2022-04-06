@@ -257,6 +257,11 @@ return [
             //'can'  => 'manage-blog',
         ],
         [
+            'text' => 'Grand Livre',
+            'url'  => 'grand-livre',
+            //'can'  => 'manage-blog',
+        ],
+        [
             'text' => 'blog',
             'url'  => 'admin/blog',
             'can'  => 'manage-blog',
