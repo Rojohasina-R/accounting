@@ -49,13 +49,17 @@
                 document.getElementById("transaction").reset()
             },
             error: function(error){
-                const errors = error.responseJSON.errors
-                let errorMessage = '<ul>'
-                for (let error of Object.values(errors)) {
-                    errorMessage = `${errorMessage}<li>${error[0]}</li>`
+                if (!error.responseJSON)
+                    toastr.error('Something went wrong')
+                else {
+                    const errors = error.responseJSON.errors
+                    let errorMessage = '<ul>'
+                    for (let error of Object.values(errors)) {
+                        errorMessage = `${errorMessage}<li>${error[0]}</li>`
+                    }
+                    errorMessage += '</ul>'
+                    toastr.error(errorMessage)
                 }
-                errorMessage += '</ul>'
-                toastr.error(errorMessage)
             }
         });
     }
