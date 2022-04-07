@@ -38,9 +38,7 @@ class TransactionController extends Controller
      */
     public function create()
     {
-        $journals = Journal::all();
-        $accounts = Account::orderBy('code')->get();
-        return view('transactions.create', compact(['journals', 'accounts']));
+        return view('transactions.create');
     }
 
     /**
@@ -77,9 +75,7 @@ class TransactionController extends Controller
      */
     public function edit(Transaction $transaction)
     {
-        $journals = Journal::all();
-        $accounts = Account::orderBy('code')->get();
-        return view('transactions.edit', compact(['transaction', 'journals', 'accounts']));
+        return view('transactions.edit', compact('transaction'));
     }
 
     /**
