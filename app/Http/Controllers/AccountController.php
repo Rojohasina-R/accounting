@@ -36,14 +36,8 @@ class AccountController extends Controller
      */
     public function store(Request $request)
     {
-        $attributes = request()->validate([
-            'code' => 'required',
-            'name' => 'required',
-            'type' => 'required|in:actif,passif,charge,produit',
-        ]);
-
+        $attributes = $this->validateAccount();
         Account::create($attributes);
-
         return true;
     }
 
@@ -78,7 +72,18 @@ class AccountController extends Controller
      */
     public function update(Request $request, Account $account)
     {
-        //
+        $attributes = $this->validateAccount();
+        $account->update($attributes);
+        return true;
+    }
+
+    protected function validateAccount()
+    {
+        return request()->validate([
+            'code' => 'required',
+            'name' => 'required',
+            'type' => 'required|in:actif,passif,charge,produit',
+        ]);
     }
 
     /**

@@ -12,6 +12,29 @@ class AccountTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
+    public function an_unauthenticated_user_and_a_simple_user_cannot_update_an_account()
+    {
+        $account = Account::factory()->create();
+
+        $this->put('/accounts/' . $account->id)->assertStatus(403);
+
+        $this->signInAsASimpleUser();
+        $this->put('/accounts/' . $account->id)->assertStatus(403);
+    }
+
+    /** @test */
+    public function an_admin_can_update_an_account()
+    {
+        $account = Account::factory()->create();
+
+        $this->signInAsAnAdmin();
+
+        $data = Account::factory()->raw();
+        $this->put('/accounts/' . $account->id, $data);
+        $this->assertDatabaseHas('accounts', $data);
+    }
+
+    /** @test */
     public function an_account_requires_a_valid_type()
     {
         $this->signInAsAnAdmin();
@@ -19,6 +42,9 @@ class AccountTest extends TestCase
         $data = Account::factory()->raw(['type' => 'aaa']);
 
         $this->post('/accounts', $data)->assertSessionHasErrors('type');
+
+        $account = Account::factory()->create();
+        $this->put('/accounts/' . $account->id, $data)->assertSessionHasErrors('type');
     }
 
     /** @test */
