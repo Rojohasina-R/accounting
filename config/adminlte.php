@@ -238,6 +238,10 @@ return [
             'can'  => 'admin',
             //'icon' => 'far fa-fw fa-file',
         ],
+        [
+            'text' => 'Liste des Opérations',
+            'url'  => 'transactions',
+        ],
         ['header' => 'Tableau de bord'],
         [
             'text' => 'Bilan',
