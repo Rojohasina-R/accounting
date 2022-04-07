@@ -1,4 +1,3 @@
-<script src="{{ asset('js/toastr.min.js') }}"></script>
 <script>
     toastr.options = {
       "closeButton": true,

@@ -33,7 +33,7 @@
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="{{ asset('/css/toastr.min.css') }}">
+
 @stop
 
 @section('js')
