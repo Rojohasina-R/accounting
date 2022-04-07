@@ -11,7 +11,7 @@
         </tr>
       </thead>
       <tbody id="lines">
-        @if (!isset($lines))
+        @if (is_null($lines))
           @include('transactions._line')
         @else
           @foreach ($lines as $line)
