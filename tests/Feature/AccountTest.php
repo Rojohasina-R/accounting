@@ -12,6 +12,16 @@ class AccountTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
+    public function an_account_requires_a_valid_type()
+    {
+        $this->signInAsAnAdmin();
+
+        $data = Account::factory()->raw(['type' => 'aaa']);
+
+        $this->post('/accounts', $data)->assertSessionHasErrors('type');
+    }
+
+    /** @test */
     public function an_unauthenticated_user_and_a_simple_user_cannot_create_an_account()
     {
         $this->post('/accounts')->assertStatus(403);
