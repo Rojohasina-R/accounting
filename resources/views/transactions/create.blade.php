@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="col-12 col-md-6 mx-auto">
-        <form method="POST" action="/transactions" id="transaction">
+        <form method="POST" action="/transactions" id="transaction-form">
             @csrf
             <x-adminlte-select name="journal_id" class="custom-select" label="Journal">
                 <option value="">Sélectionner un journal</option>

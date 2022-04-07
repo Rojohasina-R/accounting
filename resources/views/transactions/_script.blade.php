@@ -31,21 +31,27 @@
         }
         const data = {
             _token: "{{ csrf_token() }}",
-            name: $("input[name='name']").val(),
-            journal_id: $("select[name='journal_id']").val(),
-            date: $("input[name='date']").val(),
-            lines: lines
+            name: $("#name").val(),
+            journal_id: $("#journal_id").val(),
+            date: $("#date").val(),
+            lines: lines,
         }
+        if ($('#transaction-form').attr('action').includes("update"))
+            data._method = 'put'
         $.ajax({
-            url: "{{route('transactions.store')}}",
+            url: $('#transaction-form').attr('action'),
             data: data,
             method: 'post',
             dataType: 'json',
             success: function(response){
-                toastr.success("L'opération a été enregistrée avec succès")
-                $('.line').remove()
-                newLine()
-                document.getElementById("transaction").reset()
+                if ($('#transaction-form').attr('action').includes("update"))
+                    toastr.success("L'opération a été modifiée avec succès")
+                else {
+                    toastr.success("L'opération a été enregistrée avec succès")
+                    $('.line').remove()
+                    newLine()
+                    document.getElementById("transaction-form").reset()
+                }
             },
             error: function(error){
                 if (!error.responseJSON)

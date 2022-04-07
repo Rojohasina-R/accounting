@@ -15,6 +15,67 @@ class TransactionTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
+    public function an_admin_can_update_a_transaction()
+    {
+        $transaction = Transaction::factory()->create();
+
+        $this->signInAsAnAdmin();
+
+        $data = [
+            'name' => "Libellé de l'écriture",
+            'journal_id' => $journal_id = Journal::factory()->create()->id,
+            'date' => date('d/m/Y'),
+            'lines' => [
+                [
+                    'account_id' => $debited_account_id = Account::factory()->create()->id,
+                    'debit' => 40000,
+                    'credit' => null,
+                ],
+                [
+                    'account_id' => $credited_account_id = Account::factory()->create()->id,
+                    'debit' => null,
+                    'credit' => 40000,
+                ],
+            ]
+        ];
+
+        $this->get('/transactions/' . $transaction->id . '/edit')->assertOk();
+
+        $this->put('/transactions/' . $transaction->id . '/update', $data);
+
+        $this->assertDatabaseHas('transactions', [
+            'name' => "Libellé de l'écriture",
+            'journal_id' => $journal_id,
+            'date' => Carbon::today(),
+        ]);
+
+        $this->assertDatabaseHas('lines', [
+            'transaction_id' => 1,
+            'account_id' => $debited_account_id,
+            'debit' => 40000,
+        ]);
+
+        $this->assertDatabaseHas('lines', [
+            'transaction_id' => 1,
+            'account_id' => $credited_account_id,
+            'credit' => 40000,
+        ]);
+    }
+
+    /** @test */
+    public function an_unauthenticated_user_and_a_simple_user_cannot_update_a_transaction()
+    {
+        $transaction = Transaction::factory()->create();
+
+        $this->get('/transactions/' . $transaction->id . '/edit')->assertStatus(403);
+        $this->put('/transactions/' . $transaction->id . '/update')->assertStatus(403);
+
+        $this->signInAsASimpleUser();
+        $this->get('/transactions/' . $transaction->id . '/edit')->assertStatus(403);
+        $this->put('/transactions/' . $transaction->id . '/update')->assertStatus(403);
+    }
+
+    /** @test */
     public function an_admin_can_create_a_transaction()
     {
         $this->signInAsAnAdmin();

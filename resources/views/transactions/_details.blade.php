@@ -11,7 +11,13 @@
         </tr>
       </thead>
       <tbody id="lines">
-        @include('transactions._line')
+        @if (!isset($lines))
+          @include('transactions._line')
+        @else
+          @foreach ($lines as $line)
+            @include('transactions._line', ['line' => $line])
+          @endforeach
+        @endif
       </tbody>
     </table>
 </div>

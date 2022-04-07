@@ -86,7 +86,9 @@ class TransactionController extends Controller
      */
     public function edit(Transaction $transaction)
     {
-        //
+        $journals = Journal::all();
+        $accounts = Account::orderBy('code')->get();
+        return view('transactions.edit', compact(['transaction', 'journals', 'accounts']));
     }
 
     /**
@@ -98,7 +100,20 @@ class TransactionController extends Controller
      */
     public function update(Request $request, Transaction $transaction)
     {
-        //
+        $attributes = request()->validate([
+            'name' => 'required|max:255',
+            'journal_id' => 'required|exists:journals,id',
+            'date' => 'required|date_format:d/m/Y|before_or_equal:' . date('Y-m-d'),
+            'lines' => ['required', 'array', 'min:2', new Balance()],
+            'lines.*' => ['array:account_id,debit,credit'],
+            'lines.*.account_id' => 'required|exists:accounts,id',
+            'lines.*.debit' => 'nullable|integer|gt:0',
+            'lines.*.credit' => 'nullable|integer|gt:0',
+        ]);
+
+        $id = $this->transactionRepository->update($transaction, $attributes);
+
+        return $id;
     }
 
     /**

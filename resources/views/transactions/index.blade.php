@@ -15,6 +15,7 @@
                     <th class="d-none">Date</th>
                     <th>Libellé</th>
                     <th>Journal</th>
+                    <th>#</th>
                 </tr>
             </thead>
             <tbody>
@@ -26,6 +27,14 @@
                             <a href="#" onclick="fetchTransaction({{ $transaction->id }})">{{ $transaction->name }}</a>
                         </td>
                         <td>{{ $transaction->journal->name }}</td>
+                        <td>
+                            <a href="{{ route('transactions.edit', $transaction) }}" class="btn btn-xs">
+                                <i class="fa fa-pen" aria-hidden="true"></i>
+                            </a>
+                            <button type="button" class="btn btn-xs" onclick="">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                            </button>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
