@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Account;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class AccountController extends Controller
 {
@@ -94,6 +95,11 @@ class AccountController extends Controller
      */
     public function destroy(Account $account)
     {
-        //
+        if ($account->lines()->count()) {
+            throw ValidationException::withMessages([
+                'account' => 'This account is related to a transaction'
+            ]);
+        }
+        return $account->delete();
     }
 }

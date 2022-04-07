@@ -35,6 +35,7 @@ Route::middleware('can:admin')->group(function () {
 
     Route::post('/accounts', [AccountController::class, 'store'])->name('accounts.store');
     Route::put('/accounts/{account}', [AccountController::class, 'update'])->name('accounts.update');
+    Route::delete('/accounts/{account}', [AccountController::class, 'destroy'])->name('accounts.destroy');
 });
 
 require __DIR__.'/auth.php';
