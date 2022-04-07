@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Nouvelle Opération')
 
 @section('content_header')
     <h1>Enregistrer une opération</h1>
