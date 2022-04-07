@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\ReportingController;
 use App\Http\Controllers\TransactionController;
 
@@ -25,6 +26,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/transactions', [TransactionController::class, 'index']);
     Route::get('/partials/transactions/{transaction}', [TransactionController::class, 'show']);
+
+    Route::get('/accounts', [AccountController::class, 'index'])->name('accounts.index');
 });
 
 Route::middleware('can:admin')->group(function () {
