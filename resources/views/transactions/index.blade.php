@@ -22,13 +22,16 @@
                     <tr>
                         <td class="d-none">{{ $transaction->date }}</td>
                         <td>{{ $transaction->date->format('d/m/Y') }}</td>
-                        <td>{{ $transaction->name }}</td>
+                        <td>
+                            <a href="#" onclick="fetchTransaction({{ $transaction->id }})">{{ $transaction->name }}</a>
+                        </td>
                         <td>{{ $transaction->journal->name }}</td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
+    <div id="js-transaction-modal-partial"></div>
 @stop
 
 @section('css')
@@ -38,6 +41,15 @@
 @section('js')
     <script type="text/javascript" src="{{ asset('js/datatables.min.js') }}"></script>
     <script>
+        const fetchTransaction = id => {
+            fetch(`/partials/transactions/${id}`)
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById("js-transaction-modal-partial").innerHTML = html
+                    $('#transaction-modal').modal('show')
+                })
+        }
+
         $(function() {
             $('#transactions').DataTable({
                 "order": [[ 0, "desc" ]]

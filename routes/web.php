@@ -24,6 +24,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/partials/grand-livre/{account}', [ReportingController::class, 'showGrandLivreData']);
 
     Route::get('/transactions', [TransactionController::class, 'index']);
+    Route::get('/partials/transactions/{transaction}', [TransactionController::class, 'show']);
 });
 
 Route::middleware('can:admin')->group(function () {

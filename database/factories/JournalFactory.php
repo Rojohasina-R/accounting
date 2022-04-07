@@ -19,6 +19,7 @@ class JournalFactory extends Factory
         return [
             'name' => $this->faker->word(),
             'code' => $this->faker->lexify('???'),
+            'display' => $this->faker->words(3, true),
         ];
     }
 }

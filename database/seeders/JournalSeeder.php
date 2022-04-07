@@ -21,22 +21,27 @@ class JournalSeeder extends Seeder
         Journal::create([
             'name' => 'Ventes',
             'code' => 'VTE',
+            'display' => 'Journal de ventes',
         ]);
         Journal::create([
             'name' => 'Achats',
             'code' => 'ACH',
+            'display' => "Journal d'achats",
         ]);
         Journal::create([
             'name' => 'Banque',
             'code' => 'BNQ',
+            'display' => 'Journal de banque',
         ]);
         Journal::create([
             'name' => 'Caisse',
             'code' => 'CAI',
+            'display' => 'Journal de caisse',
         ]);
         Journal::create([
             'name' => 'Opérations diverses',
             'code' => 'OD',
+            'display' => "Journal d'opérations diverses",
         ]);
     }
 }
