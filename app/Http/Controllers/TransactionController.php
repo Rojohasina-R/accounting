@@ -61,9 +61,9 @@ class TransactionController extends Controller
             'lines.*.credit' => 'nullable|integer|gt:0',
         ]);
 
-        $this->transactionRepository->create($attributes);
+        $id = $this->transactionRepository->create($attributes);
 
-        return ['here'];
+        return $id;
     }
 
     /**

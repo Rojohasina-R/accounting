@@ -43,7 +43,10 @@
             method: 'post',
             dataType: 'json',
             success: function(response){
-                toastr.success('ajouté avec succès')
+                toastr.success("L'opération a été enregistrée avec succès")
+                $('.line').remove()
+                newLine()
+                document.getElementById("transaction").reset()
             },
             error: function(error){
                 const errors = error.responseJSON.errors

@@ -13,11 +13,7 @@ Ouverture/Clôture d'exercice
 Saisie partage dividendes
 
 Restes à faire:
-    x Grand livre:
-        * format date
-        * tri par date
     - CRUD transactions / Read transactions
-    - comportement de la page après ajout avec succès d'une opération
     - CRUD comptes
     - CRUD journaux
     - Refactor ReportingController
