@@ -32,6 +32,8 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware('can:admin')->group(function () {
     Route::resource('transactions', TransactionController::class)->except(['index', 'show']);
+
+    Route::post('/accounts', [AccountController::class, 'store'])->name('accounts.store');
 });
 
 require __DIR__.'/auth.php';

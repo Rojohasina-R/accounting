@@ -36,7 +36,15 @@ class AccountController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $attributes = request()->validate([
+            'code' => 'required',
+            'name' => 'required',
+            'type' => 'required|in:actif,passif,charge,produit',
+        ]);
+
+        Account::create($attributes);
+
+        return true;
     }
 
     /**
