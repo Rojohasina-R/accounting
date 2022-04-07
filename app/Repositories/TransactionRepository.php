@@ -7,28 +7,12 @@ use App\Models\Transaction;
 
 class TransactionRepository
 {
-    public function create($attributes)
+    public function updateOrCreate(Transaction $transaction, $attributes)
     {
-        $transaction = Transaction::create([
-            'name' => $attributes['name'],
-            'journal_id' => $attributes['journal_id'],
-            'date' => Carbon::createFromFormat('d/m/Y', $attributes['date'])->toDateString(),
-        ]);
-
-        foreach ($attributes['lines'] as $line) {
-            $transaction->lines()->create($line);
-        }
-
-        return $transaction->id;
-    }
-
-    public function update(Transaction $transaction, $attributes)
-    {
-        $transaction->update([
-            'name' => $attributes['name'],
-            'journal_id' => $attributes['journal_id'],
-            'date' => Carbon::createFromFormat('d/m/Y', $attributes['date'])->toDateString(),
-        ]);
+        $transaction->name = $attributes['name'];
+        $transaction->journal_id = $attributes['journal_id'];
+        $transaction->date = Carbon::createFromFormat('d/m/Y', $attributes['date'])->toDateString();
+        $transaction->save();
 
         $transaction->lines()->delete();
         foreach ($attributes['lines'] as $line) {

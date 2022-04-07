@@ -53,7 +53,7 @@ class TransactionController extends Controller
     {
         $attributes = $this->validateTransaction();
 
-        $id = $this->transactionRepository->create($attributes);
+        $id = $this->transactionRepository->updateOrCreate(new Transaction(), $attributes);
 
         return $id;
     }
@@ -93,7 +93,7 @@ class TransactionController extends Controller
     {
         $attributes = $this->validateTransaction();
 
-        $id = $this->transactionRepository->update($transaction, $attributes);
+        $id = $this->transactionRepository->updateOrCreate($transaction, $attributes);
 
         return $id;
     }
