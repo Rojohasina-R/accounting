@@ -13,7 +13,6 @@ Ouverture/Clôture d'exercice
 Saisie partage dividendes
 
 Restes à faire:
-    - CRUD transactions / Read transactions
     - CRUD comptes
     - CRUD journaux
     - Refactor ReportingController

@@ -28,11 +28,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware('can:admin')->group(function () {
-    Route::get('/transactions/create', [TransactionController::class, 'create'])->name('transactions.create');
-    Route::post('/transactions', [TransactionController::class, 'store'])->name('transactions.store');
-    Route::get('/transactions/{transaction}/edit', [TransactionController::class, 'edit'])->name('transactions.edit');
-    Route::put('/transactions/{transaction}/update', [TransactionController::class, 'update'])->name('transactions.update');
-    Route::delete('/transactions/{transaction}', [TransactionController::class, 'destroy'])->name('transactions.destroy');
+    Route::resource('transactions', TransactionController::class)->except(['index', 'show']);
 });
 
 require __DIR__.'/auth.php';

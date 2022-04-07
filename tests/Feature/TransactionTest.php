@@ -66,7 +66,7 @@ class TransactionTest extends TestCase
 
         $this->get('/transactions/' . $transaction->id . '/edit')->assertOk();
 
-        $this->put('/transactions/' . $transaction->id . '/update', $data);
+        $this->put('/transactions/' . $transaction->id, $data);
 
         $this->assertDatabaseHas('transactions', [
             'name' => "Libellé de l'écriture",
@@ -93,11 +93,11 @@ class TransactionTest extends TestCase
         $transaction = Transaction::factory()->create();
 
         $this->get('/transactions/' . $transaction->id . '/edit')->assertStatus(403);
-        $this->put('/transactions/' . $transaction->id . '/update')->assertStatus(403);
+        $this->put('/transactions/' . $transaction->id)->assertStatus(403);
 
         $this->signInAsASimpleUser();
         $this->get('/transactions/' . $transaction->id . '/edit')->assertStatus(403);
-        $this->put('/transactions/' . $transaction->id . '/update')->assertStatus(403);
+        $this->put('/transactions/' . $transaction->id)->assertStatus(403);
     }
 
     /** @test */
