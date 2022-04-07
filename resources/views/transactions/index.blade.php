@@ -20,7 +20,7 @@
             </thead>
             <tbody>
                 @foreach ($transactions as $transaction)
-                    <tr>
+                    <tr data-id="{{ $transaction->id }}">
                         <td class="d-none">{{ $transaction->date }}</td>
                         <td>{{ $transaction->date->format('d/m/Y') }}</td>
                         <td>
@@ -31,7 +31,7 @@
                             <a href="{{ route('transactions.edit', $transaction) }}" class="btn btn-xs">
                                 <i class="fa fa-pen" aria-hidden="true"></i>
                             </a>
-                            <button type="button" class="btn btn-xs" onclick="">
+                            <button type="button" class="btn btn-xs" onclick="destroy({{ $transaction->id }})">
                                 <i class="fa fa-trash" aria-hidden="true"></i>
                             </button>
                         </td>
@@ -50,6 +50,45 @@
 @section('js')
     <script type="text/javascript" src="{{ asset('js/datatables.min.js') }}"></script>
     <script>
+        const destroy = id => {
+            Swal.fire({
+              title: 'Êtes-vous sûr?',
+              text: "Cette action est irréversible!",
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#d33',
+              cancelButtonColor: '#3085d6',
+              confirmButtonText: 'Oui'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                $.ajax({
+                    url: `{{ url('transactions') }}/${id}`,
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        _method: 'delete'
+                    },
+                    method: 'post',
+                    dataType: 'json',
+                    success: function(response){
+                        $(`[data-id='${id}']`).remove()
+                        Swal.fire(
+                          'Supprimé!',
+                          "L'opération a été supprimée.",
+                          'success'
+                        )
+                    },
+                    error: function(error){
+                        Swal.fire({
+                          icon: 'error',
+                          title: 'Oops...',
+                          text: 'Something went wrong!',
+                        })
+                    }
+                });
+              }
+            })
+        }
+
         const fetchTransaction = id => {
             fetch(`/partials/transactions/${id}`)
                 .then(response => response.text())

@@ -351,13 +351,18 @@ return [
                 ],
             ],
         ],
-        'Sweetalert2' => [
-            'active' => false,
+        'Sweetalert 2 with Bootstrap 4 Theme' => [
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
-                    'asset' => false,
-                    'location' => '//cdn.jsdelivr.net/npm/sweetalert2@8',
+                    'asset' => true,
+                    'location' => '/vendor/sweetalert2/sweetalert2.all.min.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => '/vendor/sweetalert2/sweetalert2.min.css',
                 ],
             ],
         ],

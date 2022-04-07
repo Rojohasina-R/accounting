@@ -15,6 +15,31 @@ class TransactionTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
+    public function an_unauthenticated_user_and_a_simple_user_cannot_delete_a_transaction()
+    {
+        $transaction = Transaction::factory()->create();
+
+        $this->delete('/transactions/' . $transaction->id)->assertStatus(403);
+
+        $this->signInAsASimpleUser();
+        $this->delete('/transactions/' . $transaction->id)->assertStatus(403);
+    }
+
+    /** @test */
+    public function an_admin_can_delete_a_transaction()
+    {
+        $transaction = Transaction::factory()->create();
+
+        $this->signInAsAnAdmin();
+
+        $this->delete('/transactions/' . $transaction->id);
+
+        $this->assertDatabaseMissing('transactions', [
+            'id' => $transaction->id,
+        ]);
+    }
+
+    /** @test */
     public function an_admin_can_update_a_transaction()
     {
         $transaction = Transaction::factory()->create();

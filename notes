@@ -19,7 +19,3 @@ Restes à faire:
     - Refactor ReportingController
     - Turbolinks
     - Déploiement
-
-- écrire test pour mise à jour d'opération
-- refactoriser TransactionController et TransactionRepository
-- refactoriser transactions/edit.blade.php et transactions/create.blade.php

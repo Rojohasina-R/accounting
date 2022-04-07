@@ -116,6 +116,6 @@ class TransactionController extends Controller
      */
     public function destroy(Transaction $transaction)
     {
-        //
+        return $transaction->delete();
     }
 }
