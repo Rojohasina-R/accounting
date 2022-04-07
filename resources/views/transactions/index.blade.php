@@ -48,6 +48,7 @@
                     document.getElementById("js-transaction-modal-partial").innerHTML = html
                     $('#transaction-modal').modal('show')
                 })
+                .catch(error => toastr.error('Something went wrong'))
         }
 
         $(function() {

@@ -37,6 +37,7 @@
                         "order": [[ 0, "desc" ]]
                     })
                 })
+                .catch(error => toastr.error('Something went wrong'))
         }
     </script>
 @stop
