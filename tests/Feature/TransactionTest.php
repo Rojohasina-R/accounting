@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use Carbon\Carbon;
 use Tests\TestCase;
 use App\Models\Account;
 use App\Models\Journal;
@@ -43,7 +44,7 @@ class TransactionTest extends TestCase
         $this->assertDatabaseHas('transactions', [
             'name' => "Libellé de l'écriture",
             'journal_id' => $journal_id,
-            'date' => date('Y-m-d'),
+            'date' => Carbon::today(),
         ]);
 
         $this->assertDatabaseHas('lines', [

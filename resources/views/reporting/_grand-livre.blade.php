@@ -2,6 +2,7 @@
     <thead>
         <tr>
             <th>Date</th>
+            <th class="d-none">Date</th>
             <th>Libellé</th>
             <th>Débit</th>
             <th>Crédit</th>
@@ -10,7 +11,8 @@
     <tbody>
         @foreach ($lines as $line)
             <tr>
-                <td>{{ $line->transaction->date }}</td>
+                <td class="d-none">{{ $line->transaction->date }}</td>
+                <td>{{ $line->transaction->date->format('d/m/Y') }}</td>
                 <td>{{ $line->transaction->name }}</td>
                 <td>{{ $line->debit }}</td>
                 <td>{{ $line->credit }}</td>

@@ -33,7 +33,9 @@
                 .then(response => response.text())
                 .then(html => {
                     document.getElementById("js-grand-livre-partial").innerHTML = html
-                    $('#lines').DataTable()
+                    $('#lines').DataTable({
+                        "order": [[ 0, "desc" ]]
+                    })
                 })
         }
     </script>

@@ -12,6 +12,7 @@ class Transaction extends Model
     use HasFactory;
 
     protected $fillable = ['date', 'name', 'journal_id'];
+    protected $dates = ['date'];
 
     public function lines()
     {
