@@ -4,6 +4,7 @@
 
 @section('content_header')
     <h1>Liste des comptes</h1>
+    <a href="{{ route('accounts.create') }}" class="btn btn-primary">Ajouter un compte</a>
 @stop
 
 @section('content')
@@ -85,8 +86,15 @@
         }
 
         $(function() {
+            @if(session()->has('success'))
+                toastr["success"]("Compte créé")
+            @endif
+
             $('#accounts-table').DataTable({
-                "order": [[ 0, "asc" ]]
+                "order": [[ 0, "asc" ]],
+                "columnDefs": [
+                    { "type": "string", "targets": 0 }
+                ],
             })
         })
     </script>

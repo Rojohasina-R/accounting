@@ -26,7 +26,7 @@ class AccountController extends Controller
      */
     public function create()
     {
-        //
+        return view('accounts.create');
     }
 
     /**
@@ -39,7 +39,7 @@ class AccountController extends Controller
     {
         $attributes = $this->validateAccount();
         Account::create($attributes);
-        return true;
+        return redirect('/accounts')->with('success', 'Compte créé');
     }
 
     /**

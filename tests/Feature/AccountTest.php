@@ -86,9 +86,11 @@ class AccountTest extends TestCase
     /** @test */
     public function an_unauthenticated_user_and_a_simple_user_cannot_create_an_account()
     {
+        $this->get('/accounts/create')->assertStatus(403);
         $this->post('/accounts')->assertStatus(403);
 
         $this->signInAsASimpleUser();
+        $this->get('/accounts/create')->assertStatus(403);
         $this->post('/accounts')->assertStatus(403);
     }
 
@@ -98,6 +100,7 @@ class AccountTest extends TestCase
         $this->signInAsAnAdmin();
 
         $data = Account::factory()->raw();
+        $this->get('/accounts/create')->assertOk();
         $this->post('/accounts', $data);
         $this->assertDatabaseHas('accounts', $data);
     }

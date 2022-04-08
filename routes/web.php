@@ -33,9 +33,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware('can:admin')->group(function () {
     Route::resource('transactions', TransactionController::class)->except(['index', 'show']);
 
-    Route::post('/accounts', [AccountController::class, 'store'])->name('accounts.store');
-    Route::put('/accounts/{account}', [AccountController::class, 'update'])->name('accounts.update');
-    Route::delete('/accounts/{account}', [AccountController::class, 'destroy'])->name('accounts.destroy');
+    Route::resource('accounts', AccountController::class)->except(['index', 'show']);
 });
 
 require __DIR__.'/auth.php';
