@@ -112,15 +112,11 @@ class AccountTest extends TestCase
 
         $this->signInAsASimpleUser();
         $this->get('/accounts')
-            ->assertOk()
-            ->assertSee($account->code)
-            ->assertSee($account->name);
+            ->assertOk();
 
         $this->signInAsAnAdmin();
         $this->get('/accounts')
-            ->assertOk()
-            ->assertSee($account->code)
-            ->assertSee($account->name);
+            ->assertOk();
     }
 
     /** @test */
