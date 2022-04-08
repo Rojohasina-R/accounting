@@ -8,34 +8,7 @@
 @stop
 
 @section('content')
-    <div class="container pb-4">
-        <table id="accounts-table">
-            <thead>
-                <tr>
-                    <th>Code</th>
-                    <th>Libellé</th>
-                    <th>Type</th>
-                    <th>#</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($accounts as $account)
-                    <tr data-id="{{ $account->id }}">
-                        <td>{{ $account->code }}</td>
-                        <td>{{ $account->name }}</td>
-                        <td>{{ ucfirst($account->type) }}</td>
-                        <td>
-                            <button type="button" class="btn btn-xs" onclick="">
-                                <i class="fa fa-pen" aria-hidden="true"></i>
-                            </button>
-                            <button type="button" class="btn btn-xs" onclick="destroy({{ $account->id }})">
-                                <i class="fa fa-trash" aria-hidden="true"></i>
-                            </button>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
+    <div class="container pb-4" id="js-accounts-partial">
     </div>
 @stop
 
@@ -46,6 +19,27 @@
 @section('js')
     <script type="text/javascript" src="{{ asset('js/datatables.min.js') }}"></script>
     <script>
+        @if(session()->has('success'))
+            toastr["success"]("{{ session()->get('success') }}")
+        @endif
+
+        const fetchAccounts = () => {
+            fetch(`/partials/accounts`)
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById("js-accounts-partial").innerHTML = html
+                    $('#accounts-table').DataTable({
+                        "order": [[ 0, "asc" ]],
+                        "columnDefs": [
+                            { "type": "string", "targets": 0 }
+                        ],
+                    })
+                })
+                .catch(error => toastr.error('Something went wrong'))
+        }
+
+        fetchAccounts()
+
         const destroy = id => {
             Swal.fire({
               title: 'Êtes-vous sûr?',
@@ -66,7 +60,7 @@
                     method: 'post',
                     dataType: 'json',
                     success: function(response){
-                        $(`[data-id='${id}']`).remove()
+                        fetchAccounts()
                         Swal.fire(
                           'Supprimé!',
                           "Le compte a été supprimé.",
@@ -84,18 +78,5 @@
               }
             })
         }
-
-        $(function() {
-            @if(session()->has('success'))
-                toastr["success"]("Compte créé")
-            @endif
-
-            $('#accounts-table').DataTable({
-                "order": [[ 0, "asc" ]],
-                "columnDefs": [
-                    { "type": "string", "targets": 0 }
-                ],
-            })
-        })
     </script>
 @stop

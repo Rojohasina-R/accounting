@@ -28,6 +28,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/partials/transactions/{transaction}', [TransactionController::class, 'show']);
 
     Route::get('/accounts', [AccountController::class, 'index'])->name('accounts.index');
+    Route::get('/partials/accounts', [AccountController::class, 'getPartial']);
 });
 
 Route::middleware('can:admin')->group(function () {

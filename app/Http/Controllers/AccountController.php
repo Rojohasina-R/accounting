@@ -15,8 +15,13 @@ class AccountController extends Controller
      */
     public function index()
     {
+        return view('accounts.index');
+    }
+
+    public function getPartial()
+    {
         $accounts = Account::all();
-        return view('accounts.index', compact('accounts'));
+        return view('accounts._index', compact('accounts'));
     }
 
     /**
