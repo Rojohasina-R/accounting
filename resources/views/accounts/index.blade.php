@@ -68,11 +68,18 @@
                         )
                     },
                     error: function(error){
-                        Swal.fire({
-                          icon: 'error',
-                          title: 'Oops...',
-                          text: 'Something went wrong!',
-                        })
+                        if (!error.responseJSON || !error.responseJSON.errors)
+                            Swal.fire({
+                              icon: 'error',
+                              title: 'Oops...',
+                              text: 'Something went wrong!',
+                            })
+                        else
+                            Swal.fire({
+                              icon: 'error',
+                              title: 'Oops...',
+                              text: 'Ce compte est lié à une ou des opérations',
+                            })
                     }
                 });
               }
