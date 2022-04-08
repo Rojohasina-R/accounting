@@ -66,7 +66,7 @@ class AccountController extends Controller
      */
     public function edit(Account $account)
     {
-        //
+        return view('accounts.edit', compact('account'));
     }
 
     /**
@@ -80,7 +80,7 @@ class AccountController extends Controller
     {
         $attributes = $this->validateAccount();
         $account->update($attributes);
-        return true;
+        return redirect('/accounts')->with('success', 'Compte modifié');
     }
 
     protected function validateAccount()
