@@ -58,7 +58,7 @@
               showCancelButton: true,
               confirmButtonColor: '#d33',
               cancelButtonColor: '#3085d6',
-              confirmButtonText: 'Oui'
+              confirmButtonText: "Oui, supprimer l'opération"
             }).then((result) => {
               if (result.isConfirmed) {
                 $.ajax({

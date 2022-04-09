@@ -36,22 +36,23 @@
             date: $("#date").val(),
             lines: lines,
         }
-        if ($('#transaction-form').attr('action').includes("update"))
+        @if (isset($transaction))
             data._method = 'put'
+        @endif
         $.ajax({
             url: $('#transaction-form').attr('action'),
             data: data,
             method: 'post',
             dataType: 'json',
             success: function(response){
-                if ($('#transaction-form').attr('action').includes("update"))
+                @if (isset($transaction))
                     toastr.success("L'opération a été modifiée avec succès")
-                else {
+                @else
                     toastr.success("L'opération a été enregistrée avec succès")
                     $('.line').remove()
                     newLine()
                     document.getElementById("transaction-form").reset()
-                }
+                @endif
             },
             error: function(error){
                 if (!error.responseJSON)
