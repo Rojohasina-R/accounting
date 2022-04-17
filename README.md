@@ -25,3 +25,5 @@ Ceci est une application minimaliste permettant de suivre les flux financiers d'
 - configurer la base de données
 - php artisan migrate --seed
 - php artisan serve
+
+Utilisateur par défaut: rojo@test.com - 12345678
