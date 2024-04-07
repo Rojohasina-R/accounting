@@ -103,8 +103,8 @@ class TransactionController extends Controller
             'lines' => ['required', 'array', 'min:2', new Balance()],
             'lines.*' => ['array:account_id,debit,credit'],
             'lines.*.account_id' => 'required|exists:accounts,id',
-            'lines.*.debit' => 'nullable|integer|gt:0',
-            'lines.*.credit' => 'nullable|integer|gt:0',
+            'lines.*.debit' => 'nullable|numeric|gt:0',
+            'lines.*.credit' => 'nullable|numeric|gt:0',
         ]);
     }
 
