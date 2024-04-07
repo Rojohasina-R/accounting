@@ -9,8 +9,8 @@
         @endforeach
     </select>
   </td>
-  <td><input name="debit" type="number" class="w-100 small" value="{{ isset($line) ? $line->debit : '' }}"></td>
-  <td><input name="credit" type="number" class="w-100 small" value="{{ isset($line) ? $line->credit : '' }}"></td>
+  <td><input name="debit" type="number" step="0.01" class="w-100 small" value="{{ isset($line) ? $line->debit : '' }}"></td>
+  <td><input name="credit" type="number" step="0.01" class="w-100 small" value="{{ isset($line) ? $line->credit : '' }}"></td>
   <td>
     <button type="button" class="btn btn-xs" onclick="removeLine(event)">
         <i class="fa fa-trash" aria-hidden="true"></i>
