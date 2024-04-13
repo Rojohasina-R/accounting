@@ -23,7 +23,7 @@
                       @foreach ($actifs as $actif)
                         <p class="{{ $loop->last ? 'mb-0' : '' }}">
                             <span>{{ $actif['name'] }}: </span>
-                            <span class="float-right">{{ $actif['total'] }}</span>
+                            <span class="float-right">{{ $actif['formatted_total'] }}</span>
                         </p>
                       @endforeach
                   </td>
@@ -31,7 +31,7 @@
                       @foreach ($passifs as $passif)
                         <p class="{{ $loop->last ? 'mb-0' : '' }}">
                             <span>{{ $passif['name'] }}: </span>
-                            <span class="float-right">{{ $passif['total'] }}</span>
+                            <span class="float-right">{{ $passif['formatted_total'] }}</span>
                         </p>
                       @endforeach
                   </td>

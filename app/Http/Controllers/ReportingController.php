@@ -19,7 +19,8 @@ class ReportingController extends Controller
             });
             $actifs[] = [
                 'name' => $actif->name,
-                'total' => $total
+                'total' => $total,
+                'formatted_total' => number_format($total, 2, ',', ' ')
             ];
         }
 
@@ -44,12 +45,13 @@ class ReportingController extends Controller
 
             $passifs[] = [
                 'name' => $passif->name,
-                'total' => $total
+                'total' => $total,
+                'formatted_total' => number_format($total, 2, ',', ' ')
             ];
         }
 
-        $totalActif = collect($actifs)->sum('total');
-        $totalPassif = collect($passifs)->sum('total');
+        $totalActif = number_format(collect($actifs)->sum('total'), 2, ',', ' ');
+        $totalPassif = number_format(collect($passifs)->sum('total'), 2, ',', ' ');
 
         return view('reporting.bilan', compact(['actifs', 'passifs', 'totalActif', 'totalPassif']));
     }
