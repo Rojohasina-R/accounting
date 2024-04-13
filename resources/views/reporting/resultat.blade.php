@@ -23,7 +23,7 @@
                       @foreach ($charges as $charge)
                         <p class="{{ $loop->last ? 'mb-0' : '' }}">
                             <span>{{ $charge['name'] }}: </span>
-                            <span class="float-right">{{ $charge['total'] }}</span>
+                            <span class="float-right">{{ $charge['formatted_total'] }}</span>
                         </p>
                       @endforeach
                   </td>
@@ -31,7 +31,7 @@
                       @foreach ($produits as $produit)
                         <p class="{{ $loop->last ? 'mb-0' : '' }}">
                             <span>{{ $produit['name'] }}: </span>
-                            <span class="float-right">{{ $produit['total'] }}</span>
+                            <span class="float-right">{{ $produit['formatted_total'] }}</span>
                         </p>
                       @endforeach
                   </td>

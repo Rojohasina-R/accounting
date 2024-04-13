@@ -68,7 +68,8 @@ class ReportingController extends Controller
             });
             $charges[] = [
                 'name' => $charge->name,
-                'total' => $total
+                'total' => $total,
+                'formatted_total' => number_format($total, 2, ',', ' ')
             ];
         }
 
@@ -82,13 +83,17 @@ class ReportingController extends Controller
             });
             $produits[] = [
                 'name' => $produit->name,
-                'total' => $total
+                'total' => $total,
+                'formatted_total' => number_format($total, 2, ',', ' ')
             ];
         }
 
         $totalCharges = collect($charges)->sum('total');
         $totalProduits = collect($produits)->sum('total');
         $resultat = $totalProduits - $totalCharges;
+        $totalCharges = number_format($totalCharges, 2, ',', ' ');
+        $totalProduits = number_format($totalProduits, 2, ',', ' ');
+        $resultat = number_format($resultat, 2, ',', ' ');
 
         return view('reporting.resultat', compact(['charges', 'produits', 'totalCharges', 'totalProduits', 'resultat']));
     }
